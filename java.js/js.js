@@ -12,7 +12,7 @@ const app = Vue.createApp({
     },
     computed: {
       totalMensajes() {
-        return this.contactos.reduce((total, contacto) => total + contacto.mensajes, 0);
+        return this.contactos.reduce((total, contacto) => total + contacto.mensajes, );
       },
       totalLlamadas() {
         return this.contactos.reduce((total, contacto) => total + contacto.llamadas, 0);
