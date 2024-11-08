@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Contactos</title>
+  <script src="java.js/Vue.js"></script>  
+  <link rel="stylesheet" href="css.css/estilo.css">
+</head>
+
+<body>
+  <div id="app" class="container">
+    <h1>Gestión de Contactos</h1>
+
+    <div class="forma-contenedor">
+      <input v-model="nuevoContacto.name" type="text" placeholder="Nombre" />
+      <input  v-model="nuevoContacto.cel" type="text" placeholder="Teléfono" :class="{'invalid': nuevoContacto.cel.length !== 10}"/>
+      <select v-model="nuevoContacto.categoria">
+        <option disabled value="">Seleccionar Categoría</option>
+        <option>Familia</option>
+        <option>Amigo</option>
+        <option>Conocido</option>
+        <option>Trabajo</option>
+      </select>
+      <button @click="agregarContacto" :disabled="nuevoContacto.cel.length !== 10">Agregar Contacto</button> 
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Categoría</th>
+          <th>Mensajes</th>
+          <th>Llamadas</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(contacto, index) in contactos" :key="contacto.id">
+          <td>{{ contacto.name }}</td>
+          <td>{{ contacto.cel }}</td>
+          <td>{{ contacto.categoria }}</td>
+          <td>
+            <div class="counter">
+                <button @click="decrementoMensajes(contacto)" :disabled="contacto.mensajes <= 0">-</button>
+                <span>{{ contacto.mensajes }}</span>
+                <button @click="incrementoMensajes(contacto)" :disabled="contacto.mensajes >= 25">+</button>
+            </div>
+          </td>
+          <td>
+            <div class="counter">
+                <button @click="decrementoLlamadas(contacto)" :disabled="contacto.llamadas <= 0">-</button>
+                <span>{{ contacto.llamadas }}</span>
+                <button @click="incrementoLlamadas(contacto)" :disabled="contacto.llamadas >= 15">+</button>
+            </div>
+          </td>
+          <td>
+            <button @click="removeContacto(index)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div>Total Mensajes: {{ totalMensajes }}</div>
+      <div>Total Llamadas: {{ totalLlamadas }}</div>
+      <div>Total de Contactos: {{ contactos.length }}</div> 
+    </div>
+  </div>
+
+  <script src="java.js/js.js"></script>  
+</body>
+
+</html>
